@@ -1,0 +1,17 @@
+# Secrets and local data must never be committed
+.env
+instance/
+*.db
+*.sqlite3
+certs/
+*.pem
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# IDE settings
+.idea/
+*.iml
