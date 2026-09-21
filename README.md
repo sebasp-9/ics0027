@@ -2,7 +2,7 @@
 
 Course project for **ICS0027 Web Application Security** (TalTech).
 
-Author: Sebastian Parra Pinto
+Author: Sebastian Parra Pinto 
 
 A web application for storing the logins a user has on other websites. Each user protects their vault with a master password, and every saved login is encrypted before it is stored. The database only contains password hashes, salts and encrypted data, so a stolen copy of it does not reveal any passwords.
 
