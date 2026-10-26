@@ -10,4 +10,3 @@ li { margin: 1rem 0; }
 code, p, li { overflow-wrap: anywhere; }
 .error { color: #9c1c24; }
 @media (max-width: 700px) { main { margin: 1rem; padding: 1rem; } }
-

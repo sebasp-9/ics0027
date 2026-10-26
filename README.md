@@ -1,57 +1,99 @@
 # Secure Password Manager
 
 Course project for **ICS0027 Web Application Security** (TalTech).
+Author: Sebastian Parra Pinto.
 
-Author: Sebastian Parra Pinto 
+A small Python website for saving website logins. Each user signs in with an
+email and a master password, then adds, views, edits or deletes saved logins.
 
-A web application for storing the logins a user has on other websites. Each user protects their vault with a master password, and every saved login is encrypted before it is stored. The database only contains password hashes, salts and encrypted data, so a stolen copy of it does not reveal any passwords.
+## Run on a clean machine
 
-The full design (architecture, cryptography, threat model and session model) is in [`docs/DESIGN.md`](docs/DESIGN.md).
+Install **Python 3.12 or newer** with pip from https://www.python.org/downloads/.
+On Windows, select **Add Python to PATH** during installation.
 
-## Scope
+Open a terminal in the project folder.
 
-**Features**
-- Registration and login with an email and a master password
-- Items: create, view, edit and delete saved logins (title, login name, password)
-- All items encrypted with AES-256-GCM, using a key derived from the master password
-- Optional two-factor authentication with TOTP codes
-- A small JavaScript file for a show/hide password button and a copy button
+### Windows (PowerShell)
 
-**Not included:** folders, password history, changing the master password, sharing items, browser extension, account recovery. A forgotten master password cannot be recovered, because the vault key is derived from it.
+```powershell
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe app.py
+```
 
-## Planned routes
+### macOS / Linux
 
-| Method | Route | Purpose |
-|---|---|---|
-| GET, POST | `/register` | Create an account |
-| GET, POST | `/login` | Log in with email and master password |
-| GET, POST | `/login/mfa` | Enter the TOTP code (only if MFA is turned on) |
-| POST | `/logout` | Log out and delete the session |
-| GET | `/items` | List the user's items (titles only) |
-| GET, POST | `/items/new` | Add an item |
-| GET | `/items/<id>` | View an item, with the password hidden |
-| POST | `/items/<id>/reveal` | Show the item's password |
-| GET, POST | `/items/<id>/edit` | Edit an item |
-| POST | `/items/<id>/delete` | Delete an item |
-| GET, POST | `/account/mfa` | Turn TOTP on or off (optional feature) |
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python app.py
+```
 
-## Running locally (planned)
+If Linux reports that venv is missing, install your distribution's Python venv
+package first (on Ubuntu/Debian: `sudo apt install python3-venv`).
 
-The code is added in Checkpoint 2. From then on, the application will be started with these steps. It will need Python 3.12 or newer, and [mkcert](https://github.com/FiloSottile/mkcert) for a local HTTPS certificate.
+Open **https://127.0.0.1:5000**. The server creates a temporary, self-signed TLS
+certificate automatically. Your browser will show a certificate warning.
+Use its Advanced option to continue **for this local development address**.
+A new certificate is generated each time the server starts.
 
-1. Clone the repository and create a virtual environment: `python -m venv .venv`
-2. Install the libraries: `pip install -r requirements.txt`
-3. Copy `.env.example` to `.env` and set a random `SECRET_KEY` of at least 32 characters. The `.env` file is never committed.
-4. Create a trusted certificate for localhost with `mkcert localhost 127.0.0.1`.
-5. Start the application over HTTPS: `flask --app app run --cert <certificate> --key <key>`
-6. Open https://localhost:5000
+No MySQL, database account, .env file or secret key setup is needed. SQLite
+creates `instance/vault.db` automatically. Keep this file to keep your accounts
+and saved logins. Stop the server with Ctrl+C.
 
-The application will only work over HTTPS, because the session cookie has the `Secure` flag, and it will refuse to start without a proper `SECRET_KEY`.
+## Try the core flows
 
-## Status
+1. Create an account with an email and a master password of 12–128 characters.
+2. Log in and select **Add a saved login**.
+3. Enter a title, login name and password, then save.
+4. Open the saved login. Use **Show password**, **Hide password**, or **Edit login**.
+5. To delete it, tick the confirmation box and select **Delete login**.
+6. Log out when finished.
+
+A forgotten master password cannot be recovered. Use sample passwords for this
+course demonstration.
+
+## How it works
+
+- **Flask** handles the pages and forms.
+- **SQLite** stores the accounts and encrypted saved logins in one file.
+  Python's built-in `sqlite3` library uses SQL parameters for user input.
+- **Argon2id** hashes master passwords. A separate random salt derives each
+  user's vault key from their master password.
+- **AES-256-GCM** encrypts the title, login name and password together on the
+  server, using a new random nonce each time. Decryption happens on the server
+  when an authorised user opens their vault.
+- The browser receives only a random session ID. The vault key stays in server
+  memory. Cookies use Secure, HttpOnly and SameSite=Strict.
+- Login replaces the session ID. Logout removes the old session and its key.
+  Access expires after 15 idle minutes or 8 hours in total. Expired session
+  records are removed on the next request.
+- Forms have CSRF tokens. Every item lookup checks the signed-in owner.
+  HTML output is escaped, and sensitive responses are not cached.
+
+## Files
+
+| File | Purpose |
+|---|---|
+| `app.py` | Routes, SQLite queries, validation and sessions |
+| `crypto.py` | Password hashing, key derivation and encryption |
+| `templates/` | Simple HTML pages |
+| `static/style.css` | Basic page styling |
+| `docs/DESIGN.md` | Original design and checkpoint 2 implementation notes |
+| `docs/PROGRESS.md` | Short checkpoint 2 progress note |
+
+## Status and limits
 
 | Checkpoint | Status |
 |---|---|
-| 1: Design document and repository with README | Done |
-| 2: Registration, login, sessions, encrypted items | Planned |
-| 3: Rate limiting, logging, optional TOTP, tests | Planned |
+| 1: Design document and README | Done |
+| 2: Basic web interface, authentication, encrypted vault and development TLS | Implemented |
+| 3: Rate limiting, logging, optional TOTP and a permanent test suite | Planned; not included here |
+
+This is a local, single-process development application. Restarting it logs
+everyone out, while saved items stay in SQLite. The built-in development server
+and temporary certificate are for the course demonstration, not public hosting.
+
+The checkpoint sheet says “file encryption” under the password-manager heading.
+Here that is implemented as encryption/decryption of vault records stored in the
+SQLite file. There is no arbitrary file-upload feature.

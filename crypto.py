@@ -27,4 +27,3 @@ def decrypt_item(key, user_id, row):
     data = AESGCM(key).decrypt(row['nonce'], row['encrypted_data'],
                                str(user_id).encode())
     return json.loads(data)
-
