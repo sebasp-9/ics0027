@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My vault</h2>
+<p><a href="{{ url_for('edit_item') }}">Add a saved login</a></p>
+<ul>
+  {% for item in items %}
+  <li><a href="{{ url_for('view_item', item_id=item.id, _method='GET') }}">{{ item.title }}</a></li>
+  {% else %}<li>Your vault is empty.</li>{% endfor %}
+</ul>
+{% endblock %}
+
