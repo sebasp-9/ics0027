@@ -26,3 +26,15 @@ and decrypted; arbitrary file uploads are not implemented.
 
 Kept for checkpoint 3: rate limiting, audit logging, optional TOTP and a permanent
 automated test suite. The current application is a local development demo.
+
+## Docker setup
+
+Added a Dockerfile and a Compose file so the project can be started with
+`docker compose up --build`. The image uses Python 3.12 and the same application
+dependencies. It runs as a non-root user, serves HTTPS and keeps SQLite data in
+a named volume. A .dockerignore file keeps local databases and other local files
+out of the build context.
+
+The Compose configuration check passed. The container build and runtime have
+not been verified here: the Docker engine is unavailable and Docker Desktop
+could not start. The README includes the setup and run instructions.

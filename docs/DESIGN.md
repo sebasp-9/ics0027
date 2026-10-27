@@ -135,3 +135,7 @@ Optional TOTP, rate limiting, logging and the JavaScript copy button remain
 future work. Show/hide uses ordinary pages and forms without JavaScript.
 See README.md for the current behavior and run instructions, and PROGRESS.md for
 checkpoint 2 validation.
+
+Docker is now the recommended development setup. The Dockerfile uses Python
+3.12, and Compose exposes HTTPS only on the host loopback address. SQLite is
+stored in a named volume. Direct Python execution remains available.

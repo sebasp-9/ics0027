@@ -1,0 +1,10 @@
+services:
+  vault:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - vault-data:/app/instance
+
+volumes:
+  vault-data:

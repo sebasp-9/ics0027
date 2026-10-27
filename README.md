@@ -6,7 +6,43 @@ Author: Sebastian Parra Pinto.
 A small Python website for saving website logins. Each user signs in with an
 email and a master password, then adds, views, edits or deletes saved logins.
 
-## Run on a clean machine
+## Run with Docker (recommended)
+
+Install and start Docker Desktop on Windows or macOS, using Linux containers.
+On Linux, use Docker Engine with the Docker Compose plugin. Python and MySQL
+do not need to be installed on your computer.
+
+Open a terminal in the project folder and run:
+
+```sh
+docker compose up --build
+```
+
+The first run downloads Python and installs the libraries inside the image.
+Open **https://127.0.0.1:5000**. The temporary, self-signed certificate causes a
+browser warning: use Advanced to continue for this local address.
+
+Stop with Ctrl+C. To remove the stopped container:
+
+```sh
+docker compose down
+```
+
+Saved accounts and logins stay in the named Docker volume `vault-data`.
+Running the app again uses the same data. Do not add `--volumes` to the down
+command unless you intend to delete the saved data. Docker uses its own
+database; it does not import an existing local `instance/vault.db`.
+
+The Dockerfile defines the Python environment. Compose builds that image,
+connects the HTTPS port to your computer and keeps the database in a volume.
+Only this computer can access the published port. The app runs as a non-root
+user inside the container.
+
+Submit the project folder (or repository), including `Dockerfile`,
+`compose.yaml` and the application files. The Dockerfile needs these files to
+build the application.
+
+## Run directly with Python (alternative)
 
 Install **Python 3.12 or newer** with pip from https://www.python.org/downloads/.
 On Windows, select **Add Python to PATH** during installation.
@@ -75,6 +111,9 @@ course demonstration.
 
 | File | Purpose |
 |---|---|
+| `Dockerfile` | Python environment and app startup |
+| `compose.yaml` | One-command Docker startup and persistent database |
+| `.dockerignore` | Excludes local data and unrelated files from builds |
 | `app.py` | Routes, SQLite queries, validation and sessions |
 | `crypto.py` | Password hashing, key derivation and encryption |
 | `templates/` | Simple HTML pages |

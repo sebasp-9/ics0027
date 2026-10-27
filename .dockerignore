@@ -1,0 +1,10 @@
+# Only application files are sent to the Docker build.
+*
+!Dockerfile
+!requirements.txt
+!app.py
+!crypto.py
+!templates/
+!templates/**
+!static/
+!static/**

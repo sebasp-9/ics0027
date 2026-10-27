@@ -249,5 +249,5 @@ init_database()
 
 if __name__ == '__main__':
     # Temporary self-signed certificate; never enable the interactive debugger.
-    app.run(host='127.0.0.1', port=5000, ssl_context='adhoc', debug=False,
+    app.run(host=os.environ.get('HOST', '127.0.0.1'), port=5000, ssl_context='adhoc', debug=False,
             threaded=False)
