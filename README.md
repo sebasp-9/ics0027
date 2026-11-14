@@ -23,7 +23,7 @@ container. Accounts and logins stay in the `vault-data` volume.
 
 Docker includes Python and the database. No MySQL setup is needed.
 The app runs as a non-root user and the port is available only on this computer.
-Docker build and startup still need verification.
+Docker build, startup and data persistence were verified on 14 November 2026.
 
 ## Run with Python instead
 
@@ -95,8 +95,8 @@ temporary database. They do not need a running server.
 
 - **Checkpoint 1:** Design completed.
 - **Checkpoint 2:** Core app and local HTTPS implemented.
-- **Checkpoint 3:** Started. Seven security tests pass. Logging, error-handling
-  checks, browser demonstrations and the report draft remain.
+- **Checkpoint 3:** Logging, safe errors, expanded tests and a report draft prepared.
+  Docker, live HTTPS and guided Brave browser checks pass. Report draft included.
 
 See [checkpoint 3 results and next steps](docs/CHECKPOINT3.md).
 
@@ -109,3 +109,6 @@ See [checkpoint 3 results and next steps](docs/CHECKPOINT3.md).
 - `tests/test_security.py`: automated security checks.
 - `docs/DESIGN.md`: original design and later implementation notes.
 - `docs/PROGRESS.md`: checkpoint 2 progress.
+
+Logs appear as JSON in the terminal. See [manual checks](docs/DEMO.md) and
+[report draft](docs/REPORT_DRAFT.md).

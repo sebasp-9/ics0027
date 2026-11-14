@@ -1,5 +1,9 @@
 # Checkpoint 2 progress
 
+> Historical checkpoint notes. Current status: logging, safe errors and automated
+> tests are implemented; Docker/HTTPS and persistence checks passed on 14 November
+> 2026. See CHECKPOINT3.md and DEMO.md for current evidence.
+
 Implemented a basic running password manager using Python, Flask and SQLite.
 
 - Web interface: register, log in, log out, and add/view/edit/delete saved logins.

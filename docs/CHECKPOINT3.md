@@ -11,7 +11,7 @@ schema. The Database Basics MySQL project stays separate.
 
 Reviewed the code, templates, Git history through `1b1695f`, setup and existing
 notes against Project.pdf sections 4.2 and 4.4.3 and checkpoint 3.txt.
-Used the AI context and relevant master PDF chapters; this was a focused review,
+Reviewed the relevant course master PDF chapters; this was a focused review,
 not an audit of every slide.
 
 ## Run the tests
@@ -46,26 +46,19 @@ These tests check Flask responses directly. They do not test real TLS connection
 browser script execution or Docker startup. Passing them is evidence for these
 cases, not proof that every possible attack is blocked.
 
-## Next steps
+## New prepared work
 
-1. Add structured logging: event, time, user ID, source address and outcome.
-   Never log passwords, keys, tokens, cookies or saved entry contents.
-2. Simulate server/database errors and check that users see generic messages.
-3. Test session rotation, logout, expiry, cookie flags and malformed requests.
-4. Demonstrate attacks in a browser over HTTPS; verify Docker and saved data.
-5. Draft the report: Introduction, Implementation, Security Analysis, Conclusion.
-6. Review and commit the work before the deadline.
+- JSON audit logging and generic unexpected-error messages implemented.
+- Session rotation, logout replay, both expiry limits, cookie flags, HTTP rejection,
+  anonymous access, oversized input, log fields and simulated errors tested.
+- 28 executions passed (14 distinct checks; inherited checks repeat).
+- [Report draft](REPORT_DRAFT.md) and [manual demo steps](DEMO.md) prepared.
 
-Rate limiting was planned and remains to do. TOTP is optional.
+## Current status
 
-## Explain the protections
+Docker build, real HTTPS attack checks and persistence passed on 14 November.
+Guided manual checks in Brave also passed: entry actions, XSS, ownership,
+CSRF rejection with no saved entry, delete and logout. See DEMO.md.
 
-- **SQL parameters:** Submitted text is data, separate from SQL commands.
-- **Ownership:** Both the entry ID and logged-in user ID must match.
-- **XSS:** Templates display saved text safely; CSP also blocks scripts.
-- **CSRF:** Each submitted form needs this session's token.
-- **Encryption:** The master password derives the key; AES-GCM detects changes.
-
-Course references in the master/AI context: S04 (XSS), S07 (access control),
-S08-S09 (SQL injection), S10 (CSRF), S11 (secrets and encryption).
-Report requirements: Project.pdf section 1.3.
+The code, tests and verified results are ready for checkpoint 3. Final report
+formatting and the submission package are the next project tasks. Rate limiting is a documented limitation.

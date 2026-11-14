@@ -1,5 +1,9 @@
 # Secure Password Manager
 
+> Historical checkpoint notes. Current status: logging, safe errors and automated
+> tests are implemented; Docker/HTTPS and persistence checks passed on 14 November
+> 2026. See CHECKPOINT3.md and DEMO.md for current evidence.
+
 Repository: https://github.com/sebasp-9/ics0027
 
 ICS0027 Web Application Security, Checkpoint 1. Sebastian Parra Pinto (255940IVSB)
