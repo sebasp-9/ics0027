@@ -1,5 +1,8 @@
 """A small, single-process password manager for local HTTPS development."""
 import hmac
+import json
+import logging
+from datetime import datetime, timezone
 import os
 import secrets
 import sqlite3
@@ -9,6 +12,7 @@ from pathlib import Path
 
 from argon2.exceptions import VerificationError
 from cryptography.exceptions import InvalidTag
+from werkzeug.exceptions import HTTPException
 from flask import Flask, abort, g, redirect, render_template, request, url_for
 
 from crypto import decrypt_item, derive_key, encrypt_item, password_hasher
@@ -25,6 +29,33 @@ IDLE_SECONDS = 15 * 60
 TOTAL_SECONDS = 8 * 60 * 60
 # Unknown-email and wrong-password failures both perform password verification.
 dummy_hash = password_hasher.hash(secrets.token_urlsafe(32))
+
+
+audit_logger = logging.getLogger('vault.audit')
+audit_logger.setLevel(logging.INFO)
+if not audit_logger.handlers:
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(message)s'))
+    audit_logger.addHandler(handler)
+audit_logger.propagate = False
+
+
+def audit(event, outcome):
+    # Fixed fields only; submitted values and exception messages can hold secrets.
+    session = getattr(g, 'vault_session', None) or {}
+    audit_logger.info(json.dumps({
+        'time': datetime.now(timezone.utc).isoformat(),
+        'event': event, 'outcome': outcome,
+        'user_id': session.get('user_id'), 'source': request.remote_addr,
+    }))
+
+
+@app.errorhandler(Exception)
+def safe_error(error):
+    if isinstance(error, HTTPException):
+        return error
+    audit('server_error', 'failed')
+    return 'Something went wrong. Please try again later.', 500
 
 
 def database():
@@ -88,6 +119,7 @@ def load_session():
     if request.method == 'POST':
         token = request.form.get('csrf', '')
         if not hmac.compare_digest(token.encode(), g.vault_session['csrf'].encode()):
+            audit('csrf', 'denied')
             abort(400, 'This form expired. Reload the page and try again.')
 
 
@@ -167,13 +199,16 @@ def login():
                 pass
         if valid:
             new_session(user['id'], derive_key(password, user['kdf_salt']))
+            audit('login', 'success')
             return redirect(url_for('items'))
+        audit('login', 'denied')
         error = 'Incorrect email or master password.'
     return render_template('auth.html', registering=False, error=error)
 
 
 @app.post('/logout')
 def logout():
+    audit('logout', 'success')
     new_session()
     return redirect(url_for('login'))
 
@@ -182,6 +217,7 @@ def read_item(row):
     try:
         return decrypt_item(g.vault_session['key'], g.vault_session['user_id'], row)
     except InvalidTag:
+        audit('decrypt', 'failed')
         abort(400, 'This item could not be decrypted. Its stored data may be damaged.')
 
 
@@ -189,6 +225,7 @@ def owned_item(item_id):
     row = database().execute('SELECT * FROM items WHERE id = ? AND user_id = ?',
                               (item_id, g.vault_session['user_id'])).fetchone()
     if row is None:
+        audit('item_access', 'denied')
         abort(404)
     return row
 
@@ -222,6 +259,7 @@ def edit_item(item_id=None):
                 database().execute('UPDATE items SET nonce = ?, encrypted_data = ? WHERE id = ? AND user_id = ?',
                                    (nonce, encrypted, item_id, user_id))
             database().commit()
+            audit('item_create' if item_id is None else 'item_edit', 'success')
             return redirect(url_for('items'))
     return render_template('edit.html', fields=fields, error=error, editing=item_id is not None)
 
@@ -231,6 +269,7 @@ def edit_item(item_id=None):
 @login_required
 def view_item(item_id):
     fields = read_item(owned_item(item_id))
+    audit('item_reveal' if request.method == 'POST' else 'item_view', 'success')
     return render_template('view.html', fields=fields, item_id=item_id,
                            revealed=request.method == 'POST')
 
@@ -242,6 +281,7 @@ def delete_item(item_id):
     database().execute('DELETE FROM items WHERE id = ? AND user_id = ?',
                        (item_id, g.vault_session['user_id']))
     database().commit()
+    audit('item_delete', 'success')
     return redirect(url_for('items'))
 
 
