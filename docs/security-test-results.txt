@@ -1,0 +1,12 @@
+test_ciphertext_tampering_fails (test_security.SecurityTests.test_ciphertext_tampering_fails) ... ok
+test_missing_and_foreign_csrf_tokens_rejected (test_security.SecurityTests.test_missing_and_foreign_csrf_tokens_rejected) ... ok
+test_other_user_cannot_read_reveal_edit_or_delete (test_security.SecurityTests.test_other_user_cannot_read_reveal_edit_or_delete) ... ok
+test_server_enforces_length_limits (test_security.SecurityTests.test_server_enforces_length_limits) ... ok
+test_sql_injection_cannot_log_in (test_security.SecurityTests.test_sql_injection_cannot_log_in) ... ok
+test_sql_payload_round_trips_as_item_data (test_security.SecurityTests.test_sql_payload_round_trips_as_item_data) ... ok
+test_stored_xss_is_escaped (test_security.SecurityTests.test_stored_xss_is_escaped) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.813s
+
+OK
