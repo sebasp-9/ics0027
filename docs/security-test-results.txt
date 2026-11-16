@@ -1,211 +1,93 @@
-Run: 14 November 2026; Python 3.12; Windows
+Run: 16 November 2026; Python 3.12; Windows
 Command: python -m unittest discover -s tests -v
-28 executions: 14 distinct checks; base security checks also run in both extended suites.
+14 tests passed.
 
-test_ciphertext_tampering_fails (test_logging.LoggingTests.test_ciphertext_tampering_fails) ... {"time": "2026-11-14T13:47:25.840615+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:25.927005+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:25.927005+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:25.927005+00:00", "event": "decrypt", "outcome": "failed", "user_id": 1, "source": "127.0.0.1"}
+test_database_failure_is_generic (test_logging.LoggingTests.test_database_failure_is_generic) ... {"time": "2026-11-16T14:11:51.745510+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:51.834311+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
 ok
-test_database_failure_is_generic (test_logging.LoggingTests.test_database_failure_is_generic) ... {"time": "2026-11-14T13:47:26.029139+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.117866+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+test_fixed_log_fields_and_no_secrets (test_logging.LoggingTests.test_fixed_log_fields_and_no_secrets) ... {"time": "2026-11-16T14:11:51.928271+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.017172+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
 ok
-test_fixed_log_fields_and_no_secrets (test_logging.LoggingTests.test_fixed_log_fields_and_no_secrets) ... {"time": "2026-11-14T13:47:26.219674+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.308743+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+test_ciphertext_tampering_fails (test_security.SecurityTests.test_ciphertext_tampering_fails) ... {"time": "2026-11-16T14:11:52.155624+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.244901+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.248638+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.253669+00:00", "event": "decrypt", "outcome": "failed", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_missing_and_foreign_csrf_tokens_rejected (test_logging.LoggingTests.test_missing_and_foreign_csrf_tokens_rejected) ... {"time": "2026-11-14T13:47:26.435131+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.530004+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+test_missing_and_foreign_csrf_tokens_rejected (test_security.SecurityTests.test_missing_and_foreign_csrf_tokens_rejected) ... {"time": "2026-11-16T14:11:52.347166+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.436731+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.440252+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.442257+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.442257+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.442257+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.443255+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.443255+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.443255+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.444255+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.444255+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.445355+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.445355+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.445355+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.446353+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.446858+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.446858+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.447397+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_other_user_cannot_read_reveal_edit_or_delete (test_logging.LoggingTests.test_other_user_cannot_read_reveal_edit_or_delete) ... {"time": "2026-11-14T13:47:26.625036+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.719609+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.719609+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.719609+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.719609+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.719609+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.735306+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.735306+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.735306+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+test_other_user_cannot_read_reveal_edit_or_delete (test_security.SecurityTests.test_other_user_cannot_read_reveal_edit_or_delete) ... {"time": "2026-11-16T14:11:52.542200+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.631555+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.637001+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.639005+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.640005+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.642005+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.642005+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.644046+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.646624+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_server_enforces_length_limits (test_logging.LoggingTests.test_server_enforces_length_limits) ... {"time": "2026-11-14T13:47:26.830336+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:26.909174+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+test_server_enforces_length_limits (test_security.SecurityTests.test_server_enforces_length_limits) ... {"time": "2026-11-16T14:11:52.741041+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:52.830229+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
 ok
-test_sql_injection_cannot_log_in (test_logging.LoggingTests.test_sql_injection_cannot_log_in) ... {"time": "2026-11-14T13:47:27.020715+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.100076+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.131846+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.163034+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.194927+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
+test_sql_injection_cannot_log_in (test_security.SecurityTests.test_sql_injection_cannot_log_in) ... {"time": "2026-11-16T14:11:52.928104+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.016567+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.047310+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.076220+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.106759+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
 ok
-test_sql_payload_round_trips_as_item_data (test_logging.LoggingTests.test_sql_payload_round_trips_as_item_data) ... {"time": "2026-11-14T13:47:27.289982+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.384000+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.384000+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.384000+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.384000+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.384000+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.384000+00:00", "event": "item_delete", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.399624+00:00", "event": "item_access", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
+test_stored_xss_is_escaped (test_security.SecurityTests.test_stored_xss_is_escaped) ... {"time": "2026-11-16T14:11:53.202087+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.290149+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.293149+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.297359+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.299363+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.301364+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_stored_xss_is_escaped (test_logging.LoggingTests.test_stored_xss_is_escaped) ... {"time": "2026-11-14T13:47:27.483903+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.574636+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.574636+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.574636+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.590695+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.590695+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+test_vault_data_round_trip (test_security.SecurityTests.test_vault_data_round_trip) ... {"time": "2026-11-16T14:11:53.397577+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.485671+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.490179+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.491688+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.495115+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.496621+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.498625+00:00", "event": "item_delete", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.499626+00:00", "event": "item_access", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_ciphertext_tampering_fails (test_security.SecurityTests.test_ciphertext_tampering_fails) ... {"time": "2026-11-14T13:47:27.676852+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.766083+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.766083+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.782094+00:00", "event": "decrypt", "outcome": "failed", "user_id": 1, "source": "127.0.0.1"}
+test_anonymous_item_access_redirects (test_sessions.SessionTests.test_anonymous_item_access_redirects) ... {"time": "2026-11-16T14:11:53.592296+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.681154+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
 ok
-test_missing_and_foreign_csrf_tokens_rejected (test_security.SecurityTests.test_missing_and_foreign_csrf_tokens_rejected) ... {"time": "2026-11-14T13:47:27.893662+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:27.996313+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.003340+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+test_cookie_flags_and_http_rejection (test_sessions.SessionTests.test_cookie_flags_and_http_rejection) ... {"time": "2026-11-16T14:11:53.780075+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:53.869754+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
 ok
-test_other_user_cannot_read_reveal_edit_or_delete (test_security.SecurityTests.test_other_user_cannot_read_reveal_edit_or_delete) ... {"time": "2026-11-14T13:47:28.113910+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.224374+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+test_idle_and_absolute_expiry (test_sessions.SessionTests.test_idle_and_absolute_expiry) ... {"time": "2026-11-16T14:11:53.965019+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.055451+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.111675+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.170308+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_server_enforces_length_limits (test_security.SecurityTests.test_server_enforces_length_limits) ... {"time": "2026-11-14T13:47:28.349310+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.448197+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+test_login_rotates_id_and_logout_blocks_replay (test_sessions.SessionTests.test_login_rotates_id_and_logout_blocks_replay) ... {"time": "2026-11-16T14:11:54.267231+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.357056+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.414106+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.415627+00:00", "event": "logout", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
 ok
-test_sql_injection_cannot_log_in (test_security.SecurityTests.test_sql_injection_cannot_log_in) ... {"time": "2026-11-14T13:47:28.564245+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.670579+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.708873+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.739989+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.778033+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-ok
-test_sql_payload_round_trips_as_item_data (test_security.SecurityTests.test_sql_payload_round_trips_as_item_data) ... {"time": "2026-11-14T13:47:28.890976+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.999648+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.999648+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.999648+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.999648+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.999648+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:28.999648+00:00", "event": "item_delete", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.015328+00:00", "event": "item_access", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_stored_xss_is_escaped (test_security.SecurityTests.test_stored_xss_is_escaped) ... {"time": "2026-11-14T13:47:29.125413+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.226111+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.235992+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.235992+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.235992+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.235992+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_anonymous_item_access_redirects (test_sessions.SessionTests.test_anonymous_item_access_redirects) ... {"time": "2026-11-14T13:47:29.355148+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.456427+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-ok
-test_ciphertext_tampering_fails (test_sessions.SessionTests.test_ciphertext_tampering_fails) ... {"time": "2026-11-14T13:47:29.572078+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.678238+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.680244+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.680244+00:00", "event": "decrypt", "outcome": "failed", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_cookie_flags_and_http_rejection (test_sessions.SessionTests.test_cookie_flags_and_http_rejection) ... {"time": "2026-11-14T13:47:29.799250+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:29.905059+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-ok
-test_idle_and_absolute_expiry (test_sessions.SessionTests.test_idle_and_absolute_expiry) ... {"time": "2026-11-14T13:47:30.013376+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.119527+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.187393+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.253580+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_login_rotates_id_and_logout_blocks_replay (test_sessions.SessionTests.test_login_rotates_id_and_logout_blocks_replay) ... {"time": "2026-11-14T13:47:30.371914+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.471681+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.546216+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.546216+00:00", "event": "logout", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_missing_and_foreign_csrf_tokens_rejected (test_sessions.SessionTests.test_missing_and_foreign_csrf_tokens_rejected) ... {"time": "2026-11-14T13:47:30.655502+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.762057+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "csrf", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.766375+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_other_user_cannot_read_reveal_edit_or_delete (test_sessions.SessionTests.test_other_user_cannot_read_reveal_edit_or_delete) ... {"time": "2026-11-14T13:47:30.884781+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.989784+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.989784+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.989784+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.989784+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.989784+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:30.989784+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.003023+00:00", "event": "item_access", "outcome": "denied", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.003023+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_oversized_request_rejected (test_sessions.SessionTests.test_oversized_request_rejected) ... {"time": "2026-11-14T13:47:31.113834+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.220989+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-ok
-test_server_enforces_length_limits (test_sessions.SessionTests.test_server_enforces_length_limits) ... {"time": "2026-11-14T13:47:31.332200+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.438318+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-ok
-test_sql_injection_cannot_log_in (test_sessions.SessionTests.test_sql_injection_cannot_log_in) ... {"time": "2026-11-14T13:47:31.552644+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.657183+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.694409+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.725901+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.764398+00:00", "event": "login", "outcome": "denied", "user_id": null, "source": "127.0.0.1"}
-ok
-test_sql_payload_round_trips_as_item_data (test_sessions.SessionTests.test_sql_payload_round_trips_as_item_data) ... {"time": "2026-11-14T13:47:31.877148+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.982209+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.984214+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.984214+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.984214+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.984214+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.994792+00:00", "event": "item_delete", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:31.994792+00:00", "event": "item_access", "outcome": "denied", "user_id": 1, "source": "127.0.0.1"}
-ok
-test_stored_xss_is_escaped (test_sessions.SessionTests.test_stored_xss_is_escaped) ... {"time": "2026-11-14T13:47:32.108812+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:32.219673+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:32.223417+00:00", "event": "item_create", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:32.229422+00:00", "event": "item_edit", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:32.230424+00:00", "event": "item_view", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
-{"time": "2026-11-14T13:47:32.232426+00:00", "event": "item_reveal", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+test_oversized_request_rejected (test_sessions.SessionTests.test_oversized_request_rejected) ... {"time": "2026-11-16T14:11:54.511393+00:00", "event": "login", "outcome": "success", "user_id": 1, "source": "127.0.0.1"}
+{"time": "2026-11-16T14:11:54.602416+00:00", "event": "login", "outcome": "success", "user_id": 2, "source": "127.0.0.1"}
 ok
 
 ----------------------------------------------------------------------
-Ran 28 tests in 6.518s
+Ran 14 tests in 2.983s
 
 OK

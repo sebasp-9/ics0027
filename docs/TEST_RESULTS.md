@@ -1,53 +1,42 @@
 # Security tests and results
 
-Verified 14 November 2026. Environment: Python 3.12, Docker Desktop Linux
-containers and Brave on Windows. Use fictional accounts and passwords only.
+Environment: Python 3.12 on Windows. Use fictional accounts and passwords only.
 
 ## Run automated tests
 
-After installing requirements.txt in a Python virtual environment:
+After installing `requirements.txt` in a Python virtual environment:
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-On macOS/Linux use `.venv/bin/python`. Tests use disposable accounts and a
-temporary SQLite database. Result: **28 passing executions covering 14 distinct
-checks**; shared checks repeat in the extended suites. Full output is in
-`security-test-results.txt`.
+On macOS/Linux use `.venv/bin/python`. Each test creates disposable accounts in a temporary SQLite database. Result: **14 tests passed** (raw output in `docs/security-test-results.txt`).
 
-| Check | Attempt | Recorded result |
-|---|---|---|
-| Login SQL injection | `' OR 1=1 --`, `alice@example.test' --`, `'; DROP TABLE users; --` | Login denied; users table unchanged |
-| SQL text in entries | `Robert'); DROP TABLE items; --` | Treated as text; create/edit/delete still work |
-| Stored XSS | `<script>alert("demo")</script>` in saved fields | Escaped in list/view/edit/reveal responses; CSP blocks scripts |
-| Ownership | Bob requests Alice's view/edit pages and reveal/edit/delete actions | All HTTP checks returned 404; original entry unchanged |
-| CSRF | Missing and foreign tokens on every POST route | 400; no unintended data change |
-| Validation | Empty/201-character title; oversized body | Invalid entries rejected; oversized body returned 413 |
-| Ciphertext tampering | Change one ciphertext byte | 400; no decrypted password or traceback |
-| Session rotation/logout | Reuse old or logged-out session ID | Redirect to login |
-| Session expiry | Exceed idle or absolute time limit | Redirect to login; expired session removed |
-| Cookies/HTTP | Inspect flags; request plain HTTP | Secure, HttpOnly, SameSite=Strict; HTTP rejected |
-| Anonymous access | Open protected routes without login | Redirect to login |
-| Audit logs | Trigger actions/denials with secret markers | Fixed JSON fields; markers absent |
-| Unexpected error | Simulate a database failure | Generic 500 and a safe audit event |
+Only the account `email` is passed to SQLite as user-supplied text. Account and item IDs (`user_id`, `item_id`) are integers, and saved vault fields (`title`, `username`, `password`) are encrypted with AES-256-GCM before being stored as a binary `BLOB`, so vault text never reaches SQL command parsing.
 
-The row groups summarize the tests rather than defining their execution count.
-These checks support the listed cases, not every possible attack.
+| Threat | Attack attempted | Mitigation | Result |
+|---|---|---|---|
+| SQL injection | Submit `' OR 1=1 --`, `alice@example.test' --`, and `'; DROP TABLE users; --` as the login email with a valid master password | Parameterized SQLite queries (`?` placeholders) in `app.py` | Login denied (`200`); `users` table count unchanged |
+| Vault-data round-trip | Save, edit, reveal, and delete `Robert'); DROP TABLE items; --` and `' OR 1=1 --` in vault fields | Vault fields are serialized as JSON and encrypted with AES-256-GCM before `INSERT`/`UPDATE` | Stored and displayed as literal text; edit and delete work normally |
+| Stored XSS | Save `<script>alert("demo")</script>` in `title`, `username`, and `password` | Jinja2 auto-escaping in all templates and `Content-Security-Policy: ... script-src 'none'` in `app.py` | Rendered as `&lt;script&gt;` across list, view, edit, and reveal pages; CSP header present |
+| Cross-user access control (IDOR) | Logged-in user Bob requests Alice's item view/edit pages (`GET`) and reveal/edit/delete routes (`POST`) | `owned_item()` queries `WHERE id = ? AND user_id = ?` and aborts with `404` when no row matches | All cross-user requests return `404`; Alice's entry is unchanged |
+| CSRF | Send `POST` requests with a missing token or another user's token to all seven `POST` routes | Per-session random token verified on every `POST` with `hmac.compare_digest` in `load_session()`, plus `SameSite=Strict` cookie | Rejected with `400`; no account or item changes occur |
+| Input length and request size | Submit empty or 201-character item fields; send a 40 KB request body | Server-side length checks (`1..200` chars) and `MAX_CONTENT_LENGTH = 32 * 1024` in `app.py` | Invalid fields rejected with form error; oversized body rejected with `413` |
+| Ciphertext tampering | Flip one bit of `encrypted_data` in SQLite and request `/reveal` | AES-256-GCM authentication tag verified in `crypto.py` (`decrypt_item`) with `user_id` as associated data | `InvalidTag` caught; returns `400` without plaintext or traceback and logs `decrypt: failed` |
+| Session fixation, replay, and expiry | Check session ID on login, replay logged-out cookie, and exceed 15-minute idle or 8-hour total timeout | `new_session()` rotates the session ID on login and clears it on logout; `load_session()` deletes expired sessions | Old, logged-out, and expired cookies redirect (`302`) to `/login` |
+| Cookie flags and plain HTTP | Inspect `Set-Cookie` header; send request over `http://` | `Secure`, `HttpOnly`, `SameSite=Strict` set in `protect_response()`; `request.is_secure` checked in `load_session()` | All three cookie flags present; plain HTTP rejected with `400` |
+| Unauthenticated vault access | Request `/items`, `/items/new`, `/items/1`, and `/items/1/edit` without logging in | `@login_required` checks `g.vault_session['user_id']` before running vault routes | All four routes redirect (`302`) to `/login` |
+| Error handling and structured logging | Trigger normal/denied actions with secret markers, and simulate `sqlite3.OperationalError('SECRET database path')` | `safe_error()` returns a generic `500` page; `audit()` logs only fixed JSON keys (`time`, `event`, `outcome`, `user_id`, `source`) | Generic `500` returned; secret markers, passwords, emails, tokens, and exception text absent from logs |
 
-## Live Docker and HTTPS results
+## Live Docker, HTTPS, and browser checks (recorded 14 November 2026)
 
-The image built and started. Two independent HTTPS clients registered and logged
-in, created/viewed/revealed/edited entries, and confirmed SQL injection and forged
-CSRF rejection. Cross-account read/edit/reveal/delete requests returned 404.
-The saved entry and account survived container removal/recreation without deleting
-the volume. Deletion and logout passed. JSON audit events were inspected.
+On 14 November 2026, I also ran the Docker container and tested the live HTTPS server (`tests/verify_https.py`) and manual flows in Brave:
 
-The test client explicitly accepts the local self-signed certificate. It does not
-establish public certificate trust. Temporary client credentials were removed;
-fictional accounts remain in the local Docker database.
+- Two separate HTTPS clients registered, logged in, created, viewed, revealed, and edited entries, and confirmed that SQL-injection login payloads (`200` with error message), forged CSRF tokens (`400`), and cross-user read/edit/reveal/delete requests (`404`) were rejected.
+- Stopping and recreating the container without `--volumes` preserved the SQLite database and saved entries.
+- In Brave, `<script>alert("demo")</script>` displayed as literal text with no alert popup, a second account in a private window received `Not Found` (`404`) on the first account's entry URLs, and changing the hidden `csrf` input to `wrong` in developer tools returned `400` without saving an entry.
 
-To repeat those checks with Docker running:
+To repeat the live HTTPS script when Docker is running:
 
 ```powershell
 .\.venv\Scripts\python.exe tests/verify_https.py before
@@ -56,34 +45,12 @@ docker compose up -d
 .\.venv\Scripts\python.exe tests/verify_https.py after
 ```
 
-Wait until the server starts before the last command. These scripts create sample
-accounts; their temporary state stays under ignored `instance/`. Never commit it.
-
-## Manual Brave results
-
-I completed these checks on 14 November 2026:
-
-- Register, login, create, view, reveal and edit: PASS.
-- Save the script title: PASS. Literal text on the list and entry pages, no popup.
-- Second account in a private window: PASS. Not Found for the first account's
-  view and edit URLs; the owner still opened the same entry.
-- Change the add-entry CSRF token to `wrong`: PASS. HTTP 400 with the expired-form
-  message; no new entry appeared.
-- Delete the test entry: PASS. Its URL then showed Not Found.
-- Logout: PASS. Opening /items returned the login page.
-
 ## Repeat a short browser demonstration
 
 1. Run `docker compose up --build` and open https://127.0.0.1:5000.
-2. Register two sample accounts in separate normal/private windows.
-3. Create an entry in the first account; view, reveal and edit it.
-4. Save `<script>alert("demo")</script>` as its title. Expect literal text, no popup.
-5. Open that entry's URL as the second account. Expect Not Found; repeat with `/edit`.
-6. For CSRF, fill a new-entry form. Right-click **Save login**, choose **Inspect**,
-   and find the hidden `name="csrf"` input in that form. Change only its value to
-   `wrong`, press Enter and submit. Expect HTTP 400 and no new entry.
-7. Delete only your sample entry and log out. Confirm the entry is gone and /items
-   returns the login page. Check JSON events using `docker compose logs --tail 30`.
-
-Known limits: no rate limiting or MFA, single-process sessions, development TLS
-certificate and no durable log retention. The report explains these limits.
+2. Register two sample accounts in separate normal and private windows.
+3. Create an entry in the first account; view, reveal, and edit it.
+4. Save `<script>alert("demo")</script>` as its title and confirm it renders as plain text with no popup.
+5. Open that entry's view and `/edit` URLs from the second account's window and confirm both return `Not Found` (`404`).
+6. On the new-entry form, inspect the hidden `name="csrf"` input, change its value to `wrong`, and submit. Confirm HTTP `400` is returned and no entry is created.
+7. Delete the sample entry, log out, and inspect JSON audit events with `docker compose logs --tail 30`.

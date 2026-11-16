@@ -18,7 +18,7 @@ browser warning. Check this is your local address before continuing.
 Stop with Ctrl+C, then `docker compose down`.
 
 SQLite data stays in the `vault-data` volume. **Adding `--volumes` deletes it.**
-Docker includes Python and SQLite; no MySQL setup is needed.
+Docker includes Python and SQLite.
 
 ## Run with Python instead
 
@@ -44,9 +44,10 @@ stores data in `instance/vault.db`, separate from Docker's database.
 - SQL parameters, ownership checks, CSRF tokens, escaped HTML and CSP protect requests.
 - JSON audit events appear in the terminal without passwords, keys or tokens.
 
-Use sample passwords. There is no master-password recovery, rate limiting or MFA.
-This is a local, single-process course demo. Restarting logs everyone out but
-keeps saved entries. Its development server/certificate are for local use.
+Use sample passwords only. If you forget the master password, saved entries cannot
+be recovered. Restarting the server clears active sessions while keeping saved entries.
+This is a local course project; production deployment would need additions such as
+a trusted certificate and rate limiting.
 
 ## Tests
 
@@ -56,8 +57,7 @@ After the Python setup:
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-The 28 executions passed (14 distinct checks; shared checks repeat). Docker,
-live HTTPS and manual Brave checks also passed on 14 November 2026.
+All 14 automated tests pass (raw output in `docs/security-test-results.txt`).
 
 ## Files
 
@@ -67,6 +67,3 @@ live HTTPS and manual Brave checks also passed on 14 November 2026.
 - `tests/`: automated security tests and a live HTTPS check.
 - [Report](docs/REPORT.pdf) and [editable report text](docs/REPORT.md).
 - [Test results and demonstration steps](docs/TEST_RESULTS.md).
-
-Checkpoint 3 implementation and evidence are complete for the recorded cases.
-The report and Git history support the lab demonstration and final submission.

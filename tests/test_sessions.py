@@ -4,7 +4,7 @@ import test_security as fixtures
 import app as vault
 
 
-class SessionTests(fixtures.SecurityTests):
+class SessionTests(fixtures.VaultTestCase):
     def test_login_rotates_id_and_logout_blocks_replay(self):
         client = vault.app.test_client()
         self.get(client, '/login')

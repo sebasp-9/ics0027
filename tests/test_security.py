@@ -8,7 +8,7 @@ from pathlib import Path
 import app as vault
 
 
-class SecurityTests(unittest.TestCase):
+class VaultTestCase(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.original = vault.app.config['DATABASE']
@@ -43,18 +43,21 @@ class SecurityTests(unittest.TestCase):
         with closing(sqlite3.connect(vault.app.config['DATABASE'])) as db:
             return db.execute('SELECT max(id) FROM items').fetchone()[0]
 
+
+class SecurityTests(VaultTestCase):
     def test_sql_injection_cannot_log_in(self):
         client = vault.app.test_client()
         for payload in ("' OR 1=1 --", "alice@example.test' --", "'; DROP TABLE users; --"):
             with self.subTest(payload=payload):
-                response = self.post(client, '/login', email=payload, password='wrong password')
+                response = self.post(client, '/login', email=payload,
+                                     password='Example master password!')
                 self.assertEqual(response.status_code, 200)
                 self.assertIn(b'Incorrect email or master password.', response.data)
                 self.assertEqual(self.get(client, '/items').status_code, 302)
         with closing(sqlite3.connect(vault.app.config['DATABASE'])) as db:
             self.assertEqual(db.execute('SELECT count(*) FROM users').fetchone()[0], 2)
 
-    def test_sql_payload_round_trips_as_item_data(self):
+    def test_vault_data_round_trip(self):
         payload = "Robert'); DROP TABLE items; --"
         item = self.create(payload)
         self.assertIn(b'DROP TABLE items;', self.get(self.alice, f'/items/{item}').data)

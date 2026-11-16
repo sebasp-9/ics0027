@@ -6,7 +6,7 @@ import test_security as fixtures
 import app as vault
 
 
-class LoggingTests(fixtures.SecurityTests):
+class LoggingTests(fixtures.VaultTestCase):
     def test_fixed_log_fields_and_no_secrets(self):
         with self.assertLogs('vault.audit', level='INFO') as captured:
             item = self.create('DO-NOT-LOG-TITLE')
